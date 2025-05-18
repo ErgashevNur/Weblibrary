@@ -116,14 +116,27 @@ function BookDetails() {
     return (
       <div className="flex min-h-screen flex-col bg-[#121212]">
         <Navbar />
-        <div className="ml-16 mt-10 flex w-full max-w-6xl gap-8 p-4">
-          <Skeleton className="h-[500px] w-[350px] rounded-xl" />
-          <div className="flex-1 space-y-4">
-            <Skeleton className="h-8 w-3/4" />
-            <Skeleton className="h-6 w-1/2" />
-            <Skeleton className="h-4 w-1/3" />
-            <Skeleton className="h-4 w-1/3" />
-            <Skeleton className="h-32 w-full" />
+        <div className="ml-16 mt-5 flex gap-8 p-4">
+          <Skeleton className="h-[500px] w-[350px] rounded-lg bg-slate-500" />
+          <div className="space-y-2">
+            <div className="mb-4 flex flex-col gap-5">
+              <Skeleton className="h-6 w-[250px] bg-slate-600" />
+              <Skeleton className="h-5 w-[200px] bg-slate-600" />
+            </div>
+            <Skeleton className="h-3 w-[250px] bg-slate-600" />
+
+            <div className="pb-5 pt-5">
+              <Skeleton className="h-36 w-[800px] bg-slate-600" />
+            </div>
+            <Skeleton className="h-6 w-[150px] bg-slate-600" />
+
+            <div className="flex items-center gap-4 pb-4 pt-2">
+              <Skeleton className="h-[84px] w-[200px] bg-slate-600" />
+              <Skeleton className="h-[84px] w-[200px] bg-slate-600" />
+              <Skeleton className="h-[84px] w-[200px] bg-slate-600" />
+            </div>
+
+            <Skeleton className="h-[50px] w-[230px] bg-slate-600" />
           </div>
         </div>
       </div>

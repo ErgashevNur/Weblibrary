@@ -64,7 +64,7 @@ function App() {
       element: <BookDetail />,
     },
     {
-      path: "author/:id", // `author/:id` ga o'zgartirilgan
+      path: "author/:id",
       element: <AuthorDetail />,
     },
     {
@@ -91,7 +91,7 @@ function App() {
 
   return (
     <CartProvider>
-      <RouterProvider router={routes} />;
+      <RouterProvider router={routes} />
     </CartProvider>
   );
 }

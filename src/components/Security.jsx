@@ -174,7 +174,7 @@ function Security() {
                           />
                         </FormControl>
                         <FormDescription>
-                          Please enter confirm password.
+                          Please confirm password.
                         </FormDescription>
                         <FormMessage />
                       </FormItem>
