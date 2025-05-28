@@ -6,13 +6,16 @@ import { toast, Toaster } from "sonner";
 import { getFormData } from "../lib/utils";
 import { login } from "../request";
 import { useAppStore } from "../lib/zustand";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const setUser = useAppStore((state) => state.setUser);
-  const navigate = useNavigate(); // 🔥 ADD THIS
+  const navigate = useNavigate();
+
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -28,62 +31,18 @@ function Login() {
       }
 
       toast.success("Xush kelibsiz!");
-      setUser(res || {}); // user bo‘lsa o‘sha, bo‘lmasa bo‘sh obyekt
-
-      // Refresh tokenni ildizdan olamiz
-      const refreshToken = res.refreshtoken;
-
-      // Tokenni localStorage ga saqlaymiz
-      localStorage.setItem("refreshToken", refreshToken);
-
-      // Token bilan refresh so‘rovini yuboramiz
-      const tokenRes = await fetch(
-        "https://library-1dmu.onrender.com/refresh",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${refreshToken}`,
-          },
-          credentials: "include",
-        },
-      );
-
-      const tokenData = await tokenRes.json();
-      console.log("Token yangilandi:", tokenData);
+      navigate("/");
+      setUser(res || {});
+      localStorage.setItem("refreshToken", res.refreshtoken);
 
       setTimeout(() => {
-        navigate("/");
+        navigate(from, { replace: true });
       }, 500);
     } catch (err) {
       toast.error(err.message || "Loginda xatolik");
     } finally {
       setIsLoading(false);
     }
-
-    // const data = res.json();
-    // console.log("Access token:", data.access_token);
-
-    // if (!tokenRes.ok) {
-    //   toast.error("Access token olishda xatolik yuz berdi");
-    //   console.log("Error:", tokenRes.text()); // Xatolikni to'liq tekshirish
-    //   return;
-    // }
-
-    // const tokenData = tokenRes.json();
-    // const accessToken = tokenData?.access_token;
-
-    // if (accessToken) {
-    //   // Access tokenni localStorage ga saqlash
-    //   localStorage.setItem("access_token", accessToken);
-    //   localStorage.setItem("refresh_token", refreshToken);
-
-    //   // Agar user obyekt bo‘lsa:
-    //   // setUser(res.user || res);
-    //   toast.success("Xush kelibsiz!");
-    // } else {
-    //   toast.error("Access token olishda xatolik yuz berdi");
-    // }
   }
 
   return (

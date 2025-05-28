@@ -50,23 +50,22 @@ function AuthorDetails() {
       try {
         setLoading(true);
 
-        // Muallif ma'lumotlari
         const authorRes = await fetch(
           `https://library-1dmu.onrender.com/get_one_author/${id}`,
         );
         const authorData = await authorRes.json();
         setAuthor(authorData);
 
-        // Barcha kitoblar
         const booksRes = await fetch(
           "https://library-1dmu.onrender.com/get_books",
         );
         const booksData = await booksRes.json();
 
-        // Faqat shu muallif yozgan kitoblar
         const authorBooks = booksData.filter(
-          (book) => String(book.authorDetails?.id) === id,
+          (book) =>
+            authorData.full_name?.toLowerCase() === book.author?.toLowerCase(),
         );
+
         setBooks(authorBooks);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -77,8 +76,6 @@ function AuthorDetails() {
 
     fetchData();
   }, [id]);
-
-  console.log(books);
 
   if (loading || !author) {
     return (

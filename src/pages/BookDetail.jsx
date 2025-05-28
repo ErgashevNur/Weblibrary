@@ -15,7 +15,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { FaFilePdf } from "react-icons/fa";
-import { useCart } from "../context/CartContext";
+// import { useCart } from "../context/CartContext";
 import { Skeleton } from "../components/ui/skeleton";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Textarea } from "@/components/ui/textarea";
@@ -32,7 +32,7 @@ function BookDetails() {
   const [commentLoading, setCommentLoading] = useState(false);
   const [activeTab, setActiveTab] = useState("read");
   const [rating, setRating] = useState(5);
-  const { addToCart } = useCart();
+  // const { addToCart } = useCart();
 
   const formatNumber = (num) => {
     return num ? num.toLocaleString("ru-RU").replace(/,/g, " ") : "0";
@@ -71,9 +71,9 @@ function BookDetails() {
     fetchData();
   }, [id]);
 
-  const handleAddToCart = () => {
-    addToCart(book);
-  };
+  // const handleAddToCart = () => {
+  // addToCart(book);
+  // };
 
   const handleSubmitComment = async () => {
     if (!newComment.trim()) return;
@@ -114,7 +114,7 @@ function BookDetails() {
 
   if (loading || !book) {
     return (
-      <div className="flex min-h-screen flex-col bg-[#121212]">
+      <div className="flex min-h-screen flex-col">
         <Navbar />
         <div className="ml-16 mt-5 flex gap-8 p-4">
           <Skeleton className="h-[500px] w-[350px] rounded-lg bg-slate-500" />
@@ -146,9 +146,7 @@ function BookDetails() {
   return (
     <div className="min-h-screen text-white">
       <Navbar />
-
       <div className="ml-16 px-4 py-8">
-        {/* Kitob ma'lumotlari */}
         <div className="flex flex-col gap-8 md:flex-row">
           <div className="flex-shrink-0">
             <img
@@ -160,10 +158,10 @@ function BookDetails() {
 
           <div className="flex-1">
             <div className="space-y-2">
-              <h1 className="text-3xl font-bold text-[#e8c282]">
+              <h1 className="text-3xl font-bold capitalize text-[#e8c282]">
                 {book?.title}
               </h1>
-              <p className="text-xl text-[#e8c282]">
+              <p className="text-xl capitalize text-[#e8c282]">
                 {capitalizeName(book?.author)}
               </p>
 
@@ -189,7 +187,7 @@ function BookDetails() {
                 Formatlar
               </h3>
               <div className="flex gap-4">
-                <div className="w-full max-w-[180px] rounded-lg bg-[#1e1e1e] p-3">
+                <div className="w-full max-w-[180px] cursor-default rounded-lg bg-[#1e1e1e] p-3">
                   <div className="mt-1 flex items-center gap-3">
                     <Book className="h-5 w-5 text-[#C9AC8C]" />
                     <span className="text- font-medium">Qog'oz kitob</span>
@@ -199,7 +197,7 @@ function BookDetails() {
                   </p>
                 </div>
 
-                <div className="w-full max-w-[180px] rounded-lg bg-[#1e1e1e] p-4 opacity-70">
+                <div className="w-full max-w-[180px] cursor-not-allowed rounded-lg bg-[#1e1e1e] p-4 opacity-70">
                   <div className="flex items-center gap-3">
                     <AudioLinesIcon className="h-5 w-5 text-gray-500" />
                     <span className="font-medium text-gray-500">
@@ -211,7 +209,7 @@ function BookDetails() {
                   </p>
                 </div>
 
-                <div className="w-full max-w-[180px] rounded-lg bg-[#1e1e1e] p-4 opacity-70">
+                <div className="w-full max-w-[180px] cursor-not-allowed rounded-lg bg-[#1e1e1e] p-4 opacity-70">
                   <div className="flex items-center gap-3">
                     <FaFilePdf className="h-6 w-6 text-gray-500" />
                     <span className="font-medium text-gray-500">
@@ -226,7 +224,7 @@ function BookDetails() {
             </div>
 
             <Button
-              onClick={handleAddToCart}
+              // onClick={handleAddToCart}
               className="mt-6 h-12 bg-[#C9AC8C] px-8 text-[#3C2710] hover:bg-[#d4b78a]"
             >
               <Plus className="text-[#3C2710]" />
@@ -316,13 +314,13 @@ function BookDetails() {
               </div>
 
               {/* Barcha kommentlarni ko'rish tugmasi */}
-              <div className="mt-6 flex justify-center">
+              <div className="mt-10 flex justify-center">
                 <Button
                   variant="outline"
                   className="flex items-center gap-2 border-[#C9AC8C] text-gray-950 hover:bg-gray-600/10 hover:text-white"
                   onClick={() => navigate(`/book/comments`)}
                 >
-                  Barcha fikrlarni ko'rish ({comments.length})
+                  Barcha fikrlarni ko'rish ( {comments.length} )
                   <ChevronRight className="h-4 w-4" />
                 </Button>
               </div>

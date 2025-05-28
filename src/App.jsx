@@ -18,7 +18,6 @@ import { useAppStore } from "./lib/zustand";
 import { Register } from "./pages/Register";
 import { ForgotPassword } from "./pages/ForgotPassword";
 import { ResetPassword } from "./pages/ResetPassword";
-import { CartProvider } from "./context/CartContext";
 import TezKunda from "./pages/TezKunda";
 
 function App() {
@@ -27,11 +26,7 @@ function App() {
   const routes = createBrowserRouter([
     {
       path: "/",
-      element: (
-        <ProtectedRoutes user={user}>
-          <MainLayout />
-        </ProtectedRoutes>
-      ),
+      element: <MainLayout />,
       children: [
         {
           index: true,
@@ -43,9 +38,22 @@ function App() {
         },
       ],
     },
+
+    {
+      path: "/",
+      element: <ProtectedRoutes user={user} />,
+      children: [
+        { path: "book/:id", element: <BookDetail /> },
+        { path: "author/:id", element: <AuthorDetail /> },
+        { path: "kitoblar_javoni", element: <Javon /> },
+        { path: "profile", element: <Profile /> },
+        { path: "security", element: <Security /> },
+        { path: "book/comments", element: <AllCommentsPage /> },
+      ],
+    },
     {
       path: "/login",
-      element: user ? <Navigate to={"/"} /> : <Login />,
+      element: user ? <Navigate to="/" /> : <Login />,
     },
     {
       path: "/register",
@@ -59,41 +67,14 @@ function App() {
       path: "/reset-password/:token",
       element: <ResetPassword />,
     },
-    {
-      path: "book/:id",
-      element: <BookDetail />,
-    },
-    {
-      path: "author/:id",
-      element: <AuthorDetail />,
-    },
-    {
-      path: "kitoblar_javoni",
-      element: <Javon />,
-    },
-    {
-      path: "profile",
-      element: <Profile />,
-    },
-    {
-      path: "security",
-      element: <Security />,
-    },
+
     {
       path: "*",
       element: <TezKunda />,
     },
-    {
-      path: "book/comments",
-      element: <AllCommentsPage />,
-    },
   ]);
 
-  return (
-    <CartProvider>
-      <RouterProvider router={routes} />
-    </CartProvider>
-  );
+  return <RouterProvider router={routes} />;
 }
 
 export default App;

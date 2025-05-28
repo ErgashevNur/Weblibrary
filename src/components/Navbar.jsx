@@ -26,19 +26,19 @@ function Navbar({ className }) {
     },
     {
       txt: "Nasr",
-      url: "*",
+      url: "/*",
     },
     {
       txt: "Nazm",
-      url: "*",
+      url: "/*",
     },
     {
       txt: "Maqola",
-      url: "*",
+      url: "/*",
     },
     {
       txt: "Forum",
-      url: "*",
+      url: "/*",
     },
   ];
   const navigate = useNavigate();
@@ -109,7 +109,8 @@ function Navbar({ className }) {
               </DropdownMenuItem>
             </Link>
 
-            <Link to="/kitoblar_javoni">
+            <Link to="*">
+              {/* to="/kitoblar_javoni"> */}
               <DropdownMenuItem>
                 <IoLibrary /> Kitoblar javoni
               </DropdownMenuItem>

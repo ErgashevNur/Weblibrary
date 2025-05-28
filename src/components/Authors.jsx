@@ -20,7 +20,7 @@ function Authors({ authors, loading }) {
           <li
             key={author._id}
             className="rounded-lg p-4 shadow-md"
-            onClick={() => navigate(`/${author._id}`)}
+            onClick={() => navigate(`/author/${author._id}`)}
           >
             <img
               src={author.img}
