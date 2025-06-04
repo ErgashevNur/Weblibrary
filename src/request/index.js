@@ -8,7 +8,6 @@ export async function login(data) {
     body: JSON.stringify(data),
   });
   if (res.status === 200 || res.status === 201) return await res.json();
-  if (res.status === 400 || res.status === 401)
-    throw new Error("Login yoki parol da xatolik bor");
+  if (res.status === 400 || res.status === 401) throw new Error(res.message);
   else throw new Error("Someting went wrong !");
 }

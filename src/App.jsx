@@ -19,6 +19,7 @@ import { Register } from "./pages/Register";
 import { ForgotPassword } from "./pages/ForgotPassword";
 import { ResetPassword } from "./pages/ResetPassword";
 import TezKunda from "./pages/TezKunda";
+import Verification from "./pages/Verification";
 
 function App() {
   let user = useAppStore((state) => state.user);
@@ -62,6 +63,10 @@ function App() {
     {
       path: "/forgot-password",
       element: <ForgotPassword />,
+    },
+    {
+      path: "/verification",
+      element: <Verification />,
     },
     {
       path: "/reset-password/:token",

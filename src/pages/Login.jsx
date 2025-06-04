@@ -39,10 +39,33 @@ function Login() {
         navigate(from, { replace: true });
       }, 500);
     } catch (err) {
-      toast.error(err.message || "Loginda xatolik");
+      toast.error(err.message);
     } finally {
       setIsLoading(false);
     }
+
+    // async function refreshAccessToken() {
+    //   const rToken = localStorage.getItem("refreshToken");
+
+    //   console.log(rToken);
+
+    //   const res = await fetch("https://library-1dmu.onrender.com/refresh", {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //       refreshtoken: rToken,
+    //     },
+    //   });
+
+    //   const data = await res.json();
+    //   console.log(data);
+
+    //   return data.accessToken;
+    // }
+
+    // refreshAccessToken()
+    //   .then((token) => console.log(token))
+    //   .catch((err) => console.error(err));
   }
 
   return (

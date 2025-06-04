@@ -1,22 +1,24 @@
-import React, { useState } from "react";
-import { Eye, EyeOff } from "lucide-react"; // Agar iconlar kerak bo'lsa
+import { useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
 import { toast, Toaster } from "sonner";
+import { useAppStore } from "../lib/zustand";
 
 export const Register = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    confirmPassword: "", // confirmPassword ni ham qo'shdik
+    confirmPassword: "",
   });
 
   const [formDataUser, setFormDataUser] = useState({
     memberName: "",
-    age: 0,
+    age: null,
   });
 
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
+  const setUser = useAppStore((state) => state.setUser);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -30,14 +32,12 @@ export const Register = () => {
   console.log(formDataUser);
 
   const handleRegister = async () => {
-    // Parollarni tekshirish
     if (formData.password !== formData.confirmPassword) {
       toast.error("Parollar mos emas");
       return;
     }
     setLoading(true);
     try {
-      // Register endpointiga so'rov yuborish
       const resRegister = await fetch(
         "https://library-1dmu.onrender.com/register",
         {
@@ -46,7 +46,7 @@ export const Register = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            username: formDataUser.memberName, // username ni formDataUser.memberName dan olamiz
+            username: formDataUser.memberName,
             email: formData.email,
             password: formData.password,
           }),
@@ -57,7 +57,6 @@ export const Register = () => {
         const data = await resRegister.json();
         console.log("Ro‘yxatdan o‘tish muvaffaqiyatli:", data);
 
-        // addMember endpointiga so'rov yuborish
         const resAddMember = await fetch(
           "https://library-1dmu.onrender.com/add_member",
           {
@@ -66,7 +65,7 @@ export const Register = () => {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              memberName: formDataUser.memberName, // formDataUser'dan memberName ni olamiz
+              memberName: formDataUser.memberName,
               age: formDataUser.age,
             }),
           },
@@ -76,7 +75,8 @@ export const Register = () => {
           const addMemberData = await resAddMember.json();
           console.log("A'zo qo'shish muvaffaqiyatli:", addMemberData);
           setLoading(false);
-          window.location.href = "/";
+          window.location.href = "/verification";
+          setUser(resRegister || {});
         } else {
           setLoading(false);
           const error = await resAddMember.json();
@@ -92,6 +92,8 @@ export const Register = () => {
       console.error("Xatolik:", err);
       toast.error("Tizimda xatolik yuz berdi.");
     }
+
+    localStorage.setItem("userEmail", formData.email);
   };
 
   return (
@@ -137,7 +139,6 @@ export const Register = () => {
             className="w-[430px] rounded-xl border border-[#474747] px-[29px] py-[16px]"
           />
 
-          {/* Password */}
           <div className="relative">
             <input
               name="password"
@@ -156,7 +157,6 @@ export const Register = () => {
             </button>
           </div>
 
-          {/* Confirm Password */}
           <div className="relative">
             <input
               name="confirmPassword"

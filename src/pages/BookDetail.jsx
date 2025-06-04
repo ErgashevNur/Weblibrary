@@ -15,7 +15,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { FaFilePdf } from "react-icons/fa";
-// import { useCart } from "../context/CartContext";
 import { Skeleton } from "../components/ui/skeleton";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Textarea } from "@/components/ui/textarea";
@@ -32,7 +31,6 @@ function BookDetails() {
   const [commentLoading, setCommentLoading] = useState(false);
   const [activeTab, setActiveTab] = useState("read");
   const [rating, setRating] = useState(5);
-  // const { addToCart } = useCart();
 
   const formatNumber = (num) => {
     return num ? num.toLocaleString("ru-RU").replace(/,/g, " ") : "0";
@@ -71,9 +69,54 @@ function BookDetails() {
     fetchData();
   }, [id]);
 
-  // const handleAddToCart = () => {
-  // addToCart(book);
-  // };
+  const handleAddToCart = () => {
+    const token = localStorage.getItem("token"); // login paytida saqlangan token
+
+    fetch(`https://library-1dmu.onrender.com/add_to_shelf/${book._id}`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`Xatolik: ${res.status}`);
+        }
+        return res.json();
+      })
+      .then((data) => {
+        console.log("Kitob muvaffaqiyatli qo‘shildi:", data);
+        // Masalan: alert('Qo‘shildi') yoki UI yangilash
+      })
+      .catch((err) => {
+        console.error("Xatolik:", err.message);
+        // Masalan: alert('Qo‘shib bo‘lmadi')
+      });
+  };
+
+  async function refreshAccessToken() {
+    const rToken = localStorage.getItem("refreshToken");
+
+    console.log(rToken);
+
+    const res = await fetch("https://library-1dmu.onrender.com/refresh", {
+      method: "POST",
+
+      headers: {
+        refreshtoken: rToken,
+      },
+    });
+
+    const data = await res.json();
+    console.log(data);
+
+    return data.accessToken;
+  }
+
+  refreshAccessToken()
+    .then((token) => console.log(token))
+    .catch((err) => console.error(err));
 
   const handleSubmitComment = async () => {
     if (!newComment.trim()) return;
@@ -224,7 +267,7 @@ function BookDetails() {
             </div>
 
             <Button
-              // onClick={handleAddToCart}
+              onClick={handleAddToCart}
               className="mt-6 h-12 bg-[#C9AC8C] px-8 text-[#3C2710] hover:bg-[#d4b78a]"
             >
               <Plus className="text-[#3C2710]" />

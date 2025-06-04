@@ -14,6 +14,7 @@ import { IoLibrary } from "react-icons/io5";
 import { MdSecurity } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { useAppStore } from "../lib/zustand";
+import { Button } from "./ui/button";
 
 function Navbar({ className }) {
   const [isUp, setIsUp] = useState(false);
@@ -41,6 +42,7 @@ function Navbar({ className }) {
       url: "/*",
     },
   ];
+
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -78,50 +80,51 @@ function Navbar({ className }) {
         ))}
       </ul>
 
-      <div className="mr-[81px]">
-        <DropdownMenu onOpenChange={(open) => setIsUp(open)}>
-          <DropdownMenuTrigger asChild>
-            <button className="flex items-center gap-3 focus:outline-none focus:ring-0">
-              {/* <img
-                src="/public/account_img.png"
-                className="h-[50px] w-[50px] rounded-full"
-                alt="account_img"
-              /> */}
-              <CgProfile className="h-[35px] w-[35px]" />
-
-              {isUp ? <FaAngleUp size={20} /> : <FaAngleDown size={20} />}
-            </button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>My Account</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-
-            <Link to="/profile">
-              <DropdownMenuItem>
-                <CgProfile /> Profil
+      {user ? (
+        <div className="mr-[81px]">
+          <DropdownMenu onOpenChange={(open) => setIsUp(open)}>
+            <DropdownMenuTrigger asChild>
+              <Button className="flex items-center gap-3 focus:outline-none focus:ring-0">
+                <CgProfile className="h-[35px] w-[35px]" />
+                {isUp ? <FaAngleUp size={20} /> : <FaAngleDown size={20} />}
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <Link to="/profile">
+                <DropdownMenuItem>
+                  <CgProfile /> Profil
+                </DropdownMenuItem>
+              </Link>
+              <Link to="/security">
+                <DropdownMenuItem>
+                  <MdSecurity />
+                  Xavfsizlik
+                </DropdownMenuItem>
+              </Link>
+              <Link to="/kitoblar_javoni">
+                <DropdownMenuItem>
+                  <IoLibrary /> Kitoblar javoni
+                </DropdownMenuItem>
+              </Link>
+              <DropdownMenuItem onClick={Logout}>
+                <LogOutIcon /> Chiqish
               </DropdownMenuItem>
-            </Link>
-
-            <Link to="/security">
-              <DropdownMenuItem>
-                <MdSecurity />
-                Xavfsizlik
-              </DropdownMenuItem>
-            </Link>
-
-            <Link to="*">
-              {/* to="/kitoblar_javoni"> */}
-              <DropdownMenuItem>
-                <IoLibrary /> Kitoblar javoni
-              </DropdownMenuItem>
-            </Link>
-
-            <DropdownMenuItem onClick={Logout}>
-              <LogOutIcon /> Chiqish
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </div>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+      ) : (
+        <Button
+          variant="outline"
+          className="mr-20 text-black"
+          onClick={() => {
+            navigate("/login");
+          }}
+        >
+          Kirish
+        </Button>
+      )}
     </div>
   );
 }
