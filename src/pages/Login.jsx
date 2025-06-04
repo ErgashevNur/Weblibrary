@@ -3,10 +3,7 @@ import { Eye, EyeOff, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import signin from "/SignIn.svg";
 import { toast, Toaster } from "sonner";
-import { getFormData } from "../lib/utils";
 import { login } from "../request";
-import { useAppStore } from "../lib/zustand";
-import { useLocation, useNavigate } from "react-router-dom";
 
 // react-router-dom 
 import { Link } from "react-router-dom";
@@ -71,7 +68,7 @@ function Login() {
 
         {/* email  */}
         <input
-          className="w-full rounded-xl border border-[#B4B4BB] px-[29px] py-[16px]"
+          className="w-full rounded-xl border border-[#B4B4BB] px-5 py-3"
           name="email"
           type="email"
           placeholder="Email"
@@ -83,7 +80,7 @@ function Login() {
         <div className="relative">
           {/* password  */}
           <input
-            className="w-full rounded-xl border border-[#B4B4BB] px-[29px] py-[16px] pr-12"
+            className="w-full rounded-xl border border-[#B4B4BB] py-3 px-5 pr-12"
             name="password"
             type={showPassword ? "text" : "password"}
             placeholder="Password"
