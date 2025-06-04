@@ -47,7 +47,7 @@ function Login() {
   };
 
   return (
-    <div className="flex h-screen items-center bg-white">
+    <div className="flex h-screen items-center justify-between bg-white text-black">
       {/* right image */}
       <img
         src={signin}
@@ -56,81 +56,78 @@ function Login() {
       />
 
       {/* left form  */}
-      <div className="mx-auto flex flex-col bg-white text-black">
-        <form onSubmit={handleSubmit}>
-          <h2 className="font-slab mb-5 text-left text-[40px] font-black">
-            Sign in
-          </h2>
+      <form className="max-w-[330px] w-full space-y-5" onSubmit={handleSubmit}>
+        <p className="text-[40px] font-extrabold">
+          Sign in
+        </p>
 
-          <p className="mb-[21px] mt-[5px] font-sans text-[13px] font-normal">
-            Already have an account?
-            <Link className="text-blue-600 underline" to="/register">
-              Register
-            </Link>
-          </p>
+        <p>
+          Already have an account?
+          <Link className="text-blue-700 hover:text-blue-500 underline ml-2" to="/register">
+            Register
+          </Link>
+        </p>
 
-          <div className="flex flex-col gap-5">
-            <div className="flex flex-col gap-4">
 
-              {/* email  */}
-              <input
-                className="w-50% rounded-xl border border-[#474747] px-[29px] py-[16px]"
-                name="email"
-                type="email"
-                placeholder="Email"
-                required
-                value={formData.email}
-                onChange={handleChange}
-              />
+        {/* email  */}
+        <input
+          className="w-full rounded-xl border border-[#B4B4BB] px-[29px] py-[16px]"
+          name="email"
+          type="email"
+          placeholder="Email"
+          required
+          value={formData.email}
+          onChange={handleChange}
+        />
 
-              <div className="relative">
+        <div className="relative">
+          {/* password  */}
+          <input
+            className="w-full rounded-xl border border-[#B4B4BB] px-[29px] py-[16px] pr-12"
+            name="password"
+            type={showPassword ? "text" : "password"}
+            placeholder="Password"
+            required
+            value={formData.password}
+            onChange={handleChange}
+          />
 
-                {/* password  */}
-                <input
-                  className="w-[430px] rounded-xl border border-[#474747] px-[29px] py-[16px] pr-12"
-                  name="password"
-                  type={showPassword ? "text" : "password"}
-                  placeholder="Password"
-                  required
-                  value={formData.password}
-                  onChange={handleChange}
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500"
-                >
-                  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-                </button>
-              </div>
-            </div>
-
-            <p className="text-sm text-gray-600">
-              Parolni unutdingizmi?{" "}
-              <a
-                href="/forgot-password"
-                className="text-blue-600 underline hover:text-blue-800"
-              >
-                Qayta tiklash
-              </a>
-            </p>
-          </div>
-
-          <Button
-            type="submit"
-            disabled={isLoading}
-            className="mt-[39px] w-full max-w-[430px] rounded-full bg-[#152540] py-[27px] text-[18px] font-medium text-white disabled:opacity-50"
+          {/* eye button  */}
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500"
           >
-            {isLoading ? (
-              <>
-                <RefreshCw className="animate-spin" /> Iltimos kuting...
-              </>
-            ) : (
-              "Keyingi qadam"
-            )}
-          </Button>
-        </form>
-      </div>
+            {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+          </button>
+        </div>
+
+        <p>
+          Parolni unutdingizmi?
+          <Link
+            to="/forgot-password"
+            className="text-blue-700 underline hover:text-blue-500 ml-2"
+          >
+            Qayta tiklash
+          </Link>
+        </p>
+
+
+        {/* submit btn  */}
+        <Button
+          type="submit"
+          disabled={isLoading}
+          className="w-full rounded-full bg-[#152540] text-white text-[18px] font-bold py-6 hover:bg-[#1d3257]"
+        >
+          {isLoading ? (
+            <>
+              <RefreshCw className="animate-spin" /> Iltimos kuting...
+            </>
+          ) : (
+            "Keyingi qadam"
+          )}
+        </Button>
+      </form>
       <Toaster position="top-center" richColors />
     </div>
   );
