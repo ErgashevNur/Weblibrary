@@ -105,7 +105,7 @@ export const Register = () => {
         alt="sign up page image"
       />
 
-      <div className="mx-auto bg-white text-black space-y-3">
+      <div className="mx-auto bg-white text-black space-y-3 max-w-[330px] w-full">
         <h2 className="font-extrabold text-[40px]">Sign up</h2>
 
         <p>
@@ -115,7 +115,7 @@ export const Register = () => {
           </Link>
         </p>
 
-        <div className="flex flex-col max-w-[330px] w-full space-y-3">
+        <div className="flex flex-col w-full space-y-3">
           <input
             name="memberName"
             type="text"
