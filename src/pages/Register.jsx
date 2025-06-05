@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { Eye, EyeOff } from "lucide-react"; // Agar iconlar kerak bo'lsa
 import { toast, Toaster } from "sonner";
 
+// react router dom 
+import { Link } from "react-router-dom";
+
 export const Register = () => {
   const [formData, setFormData] = useState({
     email: "",
@@ -11,7 +14,7 @@ export const Register = () => {
 
   const [formDataUser, setFormDataUser] = useState({
     memberName: "",
-    age: 0,
+    age: "",
   });
 
   const [loading, setLoading] = useState(false);
@@ -98,27 +101,28 @@ export const Register = () => {
     <div className="mx-auto flex h-screen items-center justify-between bg-white">
       <img
         src="/SignUp.svg"
-        className="h-full w-[50%] bg-[#C9AC8CED] px-[38px] py-[100px]"
-        alt="SignUp"
+        className="h-full w-[50%] bg-[#C9AC8CED]"
+        alt="sign up page image"
       />
 
-      <div className="mx-auto bg-white pb-[100px] pt-[123px] text-black">
-        <h2 className="font-slab text-[40px] font-black">Register</h2>
-        <p className="mb-[21px] mt-[5px] font-sans text-[13px] font-normal">
-          Already have an account?{" "}
-          <a href="/login" className="text-blue-500 underline">
+      <div className="mx-auto bg-white text-black space-y-3">
+        <h2 className="font-extrabold text-[40px]">Sign up</h2>
+
+        <p>
+          Don't have an account?
+          <Link className="text-blue-700 hover:text-blue-500 underline ml-2" to="/login">
             Login
-          </a>
+          </Link>
         </p>
 
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col max-w-[330px] w-full space-y-3">
           <input
             name="memberName"
             type="text"
             placeholder="Username"
             value={formDataUser.memberName}
             onChange={handleChangeMember}
-            className="w-[430px] rounded-xl border border-[#474747] px-[29px] py-[16px]"
+            className="w-full rounded-xl border border-[#B4B4BB] px-5 py-3"
           />
           <input
             name="age"
@@ -126,7 +130,7 @@ export const Register = () => {
             placeholder="Age"
             value={formDataUser.age}
             onChange={handleChangeMember}
-            className="w-[430px] rounded-xl border border-[#474747] px-[29px] py-[16px]"
+            className="rounded-xl border border-[#B4B4BB] px-5 py-3"
           />
           <input
             name="email"
@@ -134,18 +138,18 @@ export const Register = () => {
             placeholder="Email"
             value={formData.email}
             onChange={handleChange}
-            className="w-[430px] rounded-xl border border-[#474747] px-[29px] py-[16px]"
+            className="rounded-xl border border-[#B4B4BB] px-5 py-3"
           />
 
           {/* Password */}
-          <div className="relative">
+          <div className="relative w-full">
             <input
               name="password"
               type={showPassword ? "text" : "password"}
               placeholder="Password"
               value={formData.password}
               onChange={handleChange}
-              className="w-[430px] rounded-xl border border-[#474747] px-[29px] py-[16px] pr-[50px]"
+              className="w-full rounded-xl border border-[#B4B4BB] px-5 py-3"
             />
             <button
               type="button"
@@ -157,14 +161,14 @@ export const Register = () => {
           </div>
 
           {/* Confirm Password */}
-          <div className="relative">
+          <div className="relative w-full">
             <input
               name="confirmPassword"
               type={showConfirm ? "text" : "password"}
               placeholder="Confirm Password"
               value={formData.confirmPassword}
               onChange={handleChange}
-              className="w-[430px] rounded-xl border border-[#474747] px-[29px] py-[16px] pr-[50px]"
+              className="w-full rounded-xl border border-[#B4B4BB] px-5 py-3"
             />
             <button
               type="button"
@@ -178,7 +182,7 @@ export const Register = () => {
 
         <button
           onClick={handleRegister}
-          className="mt-[39px] w-full max-w-[430px] rounded-full bg-[#152540] py-4 text-[18px] font-medium text-white"
+          className="w-full rounded-full bg-[#152540] text-white text-[18px] font-bold py-3 hover:bg-[#1d3257]"
         >
           {loading ? "Loading..." : "Next step"}
         </button>
